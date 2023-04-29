@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: monospace, 'Courier New', Courier;
+  font-size: 1.5rem;
+}
+
+body {
+  height: 100vh;
+}
+.terminal__input {
+  display: flex;
+}
+.terminal__input input {
+  /* background-color: indigo; */
+  width: 100%;
+  border: none;
+  outline: none;
+}
