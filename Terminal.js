@@ -2,9 +2,10 @@ import { Command } from './Command.js'
 import { CommandManager } from './CommandManager.js'
 
 export class Terminal {
-  constructor(elementInput, outputElement) {
+  constructor(terminalElement, inputElement, outputElement) {
     this.commandManager = new CommandManager()
-    this.elementInput = elementInput
+    this.terminalElement = terminalElement
+    this.inputElement = inputElement
     this.outputElement = outputElement
     this.prompt = `<span class='user-host-name'>doneber@pc</span>:<span class='path'>~</span>$&nbsp`
     this.currentLine = ''
@@ -14,8 +15,8 @@ export class Terminal {
   }
 
   bindEventListeners() {
-    this.elementInput.addEventListener('keydown', this.handleInputKeyDown.bind(this))
-    this.elementInput.addEventListener('input', this.handleInputChange.bind(this))
+    this.inputElement.addEventListener('keydown', this.handleInputKeyDown.bind(this))
+    this.inputElement.addEventListener('input', this.handleInputChange.bind(this))
   }
 
   handleInputKeyDown(event) {
@@ -28,17 +29,17 @@ export class Terminal {
       if (this.historyIndex > 0) {
         this.historyIndex--
         this.currentLine = this.commandHistory[this.historyIndex]
-        this.elementInput.value = this.currentLine //
+        this.inputElement.value = this.currentLine //
       }
     } else if (event.key === 'ArrowDown') {
       event.preventDefault()
       if (this.historyIndex < this.commandHistory.length - 1) {
         this.historyIndex++
         this.currentLine = this.commandHistory[this.historyIndex]
-        this.elementInput.value = this.currentLine
+        this.inputElement.value = this.currentLine
       } else {
         this.currentLine = ''
-        this.elementInput.value = this.currentLine
+        this.inputElement.value = this.currentLine
       }
     }
   }
@@ -48,7 +49,7 @@ export class Terminal {
   }
 
   clearInput() {
-    this.elementInput.value = ''
+    this.inputElement.value = ''
     this.currentLine = ''
   }
   executeCommand(input) {
@@ -91,14 +92,14 @@ export class Terminal {
         `&emsp;&emsp;${command.description} <br>`,
         '',
       ];
-  
+
       if (command.options.length > 0) {
         outputLines.push('', '<br>&emsp;&emsp;Options:<br>');
         command.options.forEach(({ option, description }) => {
           outputLines.push(`&emsp;&emsp;&emsp;&emsp;${option}&emsp;${description} <br>`);
         });
       }
-  
+
       return outputLines.join('');
     }
     // Help Command Handler
@@ -125,14 +126,15 @@ export class Terminal {
     const helpCommand = new Command('help', helpHandler, 'Display information about available commands');
     this.commandManager.registerCommand(helpCommand);
   }
-  renderCommandExecuted(input) {
+  async renderCommandExecuted(input) {
     this.outputElement.innerHTML += `${this.prompt}${input}</p>`
-    this.outputElement.scrollTop = this.outputElement.scrollHeight
-    this.elementInput.scrollTop = this.elementInput.scrollHeight
+    await setTimeout(() => {
+      // set the scroll to the bottom
+      this.terminalElement.scrollTop = this.terminalElement.scrollHeight
+    }, 1)
   }
   render(text) {
     this.outputElement.innerHTML += `<p>${text}</p>`
-    this.outputElement.scrollTop = this.outputElement.scrollHeight
-    this.elementInput.scrollTop = this.elementInput.scrollHeight
+    this.terminalElement.scrollTop = this.terminalElement.scrollHeight
   }
 }

@@ -18,20 +18,32 @@ body {
 }
 
 .terminal {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
   color: var(--text-color);
   background-color: var(--bg-color);
   width: 100%;
   height: 100%;
 }
+
 .user-host-name {
   color: var(--primary-color);
 }
+
 .path {
   color: var(--secondary-color);
 }
+
 .terminal__input {
   display: flex;
+  align-items: start;
 }
+
+.terminal__blank-space {
+  height: 100%;
+}
+
 .terminal__input input {
   color: var(--text-color);
   background-color: transparent;

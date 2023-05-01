@@ -3,6 +3,10 @@ import { Terminal } from './Terminal.js'
 const $ = (selector, context = document) =>
   context.querySelector(selector)
 
+const terminalElement = $('.terminal')
+const inputElement = $('.terminal__input input')
+const outputElement = $('.terminal__output')
+
 const commands = [
   {
     name: 'ls',
@@ -33,7 +37,7 @@ const commands = [
   {
     name: 'clear',
     handler: (args) => {
-      $('.terminal__output').innerHTML = ''
+      outputElement.innerHTML = ''
       return ''
     },
     description: 'Clear the terminal screen',
@@ -42,5 +46,9 @@ const commands = [
   },
 ]
 
-const terminal = new Terminal($('.terminal__input input'), $('.terminal__output'))
+const terminal = new Terminal(terminalElement, inputElement, outputElement)
 terminal.loadCommands([...commands])
+
+$('.terminal__blank-space').addEventListener('click', () => {
+  inputElement.focus()
+})
