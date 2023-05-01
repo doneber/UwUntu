@@ -1,24 +1,9 @@
 export class Command {
-  constructor(name, handler) {
-    this.name = name;
-    this.handler = handler;
-  }
-}
-
-export class CommandManager {
-  constructor() {
-    this.commands = new Map();
-  }
-
-  registerCommand(command) {
-    this.commands.set(command.name, command);
-  }
-
-  getCommand(commandName) {
-    return this.commands.get(commandName);
-  }
-
-  hasCommand(commandName) {
-    return this.commands.has(commandName);
+  constructor(name, handler, description = '', usage = '', options = []) {
+    this.name = name
+    this.handler = handler
+    this.description = description
+    this.usage = usage
+    this.options = options // [{ option: '-o', description: 'Example option' }]
   }
 }

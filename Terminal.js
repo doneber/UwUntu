@@ -1,5 +1,5 @@
 import { Command } from './Command.js'
-import { CommandManager } from './Command.js'
+import { CommandManager } from './CommandManager.js'
 
 export class Terminal {
   constructor(elementInput, outputElement) {
@@ -23,14 +23,12 @@ export class Terminal {
       event.preventDefault()
       this.executeCommand(this.currentLine.trim())
       this.currentLine = ''
-      // this.renderCommandExecuted()
     } else if (event.key === 'ArrowUp') {
       event.preventDefault()
       if (this.historyIndex > 0) {
         this.historyIndex--
         this.currentLine = this.commandHistory[this.historyIndex]
         this.elementInput.value = this.currentLine //
-        // this.renderCommandExecuted()
       }
     } else if (event.key === 'ArrowDown') {
       event.preventDefault()
@@ -79,9 +77,53 @@ export class Terminal {
 
   loadCommands(commands) {
     commands.forEach((command) => {
-      const newCommand = new Command(command.name, command.handler)
-      this.commandManager.registerCommand(newCommand)
-    })
+      const newCommandInstance = new Command(command.name, command.handler,
+        command.description || '',
+        command.usage || '',
+        command.options || []);
+      this.commandManager.registerCommand(newCommandInstance);
+    });
+
+    // display help command
+    const displayHelp = (command) => {
+      const outputLines = [
+        `${command.name}: ${command.name} ${command.usage} <br>`,
+        `&emsp;&emsp;${command.description} <br>`,
+        '',
+      ];
+  
+      if (command.options.length > 0) {
+        outputLines.push('', '<br>&emsp;&emsp;Options:<br>');
+        command.options.forEach(({ option, description }) => {
+          outputLines.push(`&emsp;&emsp;&emsp;&emsp;${option}&emsp;${description} <br>`);
+        });
+      }
+  
+      return outputLines.join('');
+    }
+    // Help Command Handler
+    const helpHandler = (args) => {
+      if (args.length === 1) {
+        const targetCmdName = args[0];
+        const targetCmd = this.commandManager.getCommand(targetCmdName)
+
+        if (targetCmd)
+          return displayHelp(targetCmd);
+        else
+          return `${targetCmdName}: command not found`;
+      } else {
+        // display all commands available with their descriptions, arguments and options
+        const outputLines = ['Available commands:<br><br>'];
+        this.commandManager.commands.forEach((command) => {
+          outputLines.push(`&emsp;${command.name}&emsp;&emsp;${command.description}<br>`);
+        }
+        );
+        return outputLines.join('');
+      }
+    };
+
+    const helpCommand = new Command('help', helpHandler, 'Display information about available commands');
+    this.commandManager.registerCommand(helpCommand);
   }
   renderCommandExecuted(input) {
     this.outputElement.innerHTML += `${this.prompt}${input}</p>`
