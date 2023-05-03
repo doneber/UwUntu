@@ -1,9 +1,8 @@
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: monospace, 'Courier New', Courier;
-  font-size: 1.5rem;
+  font-family: "Ubuntu variable", "Ubuntu", -apple-system, "Segoe UI", "Roboto", "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 :root {
@@ -15,39 +14,117 @@
 
 body {
   height: 100vh;
+  background-image: url(background.svg);
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
 }
 
-.terminal {
+main {
+  height: 100vh;
+  width: min(100% - 2rem, 1500px);
+  margin: 0 auto;
+}
+
+.desktop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  padding-bottom: 8rem;
+  color: #fff;
+}
+
+.desktop__content {
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+  width: 100%;
+}
+
+.window {
+  box-shadow: 2px 2px 16px rgba(0, 0, 0, .5);
   display: flex;
   flex-direction: column;
-  overflow: auto;
-  color: var(--text-color);
-  background-color: var(--bg-color);
-  width: 100%;
-  height: 100%;
+  justify-content: start;
+  overflow: hidden;
+  width: 50%;
+  height: 450px;
+  background-color: #343536;
+  border: 1px solid #777c81;
+  border-radius: 8px;
 }
 
-.user-host-name {
-  color: var(--primary-color);
-}
-
-.path {
-  color: var(--secondary-color);
-}
-
-.terminal__input {
+.window__appbar {
   display: flex;
-  align-items: start;
+  align-items: center;
+  gap: .6rem;
+  height: 2rem;
+  margin: .3rem .5rem;
 }
 
-.terminal__blank-space {
-  height: 100%;
+.window__appbar h3 {
+  font-weight: 500;
+  color: rgb(255, 255, 255);
 }
 
-.terminal__input input {
-  color: var(--text-color);
-  background-color: transparent;
-  width: 100%;
-  border: none;
-  outline: none;
+.copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+}
+
+.copy h2 {
+  margin-bottom: 1rem;
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 3.5rem;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, .1);
+}
+
+.copy p {
+  font-size: 1.8rem;
+  font-weight: 400;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+}
+
+@media screen and (max-width: 1280px) {
+  main {
+    width: calc(100% - 5rem);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  main {
+    width: calc(100% - 2rem);
+  }
+
+  .desktop {
+    padding-bottom: 0;
+  }
+
+  .copy {
+    width: 100%;
+  }
+
+  .copy h2 {
+    font-size: 2.3rem;
+    line-height: 2.8rem;
+  }
+
+  .copy p {
+    font-size: 1.5rem;
+  }
+
+  .desktop__content {
+    flex-direction: column;
+
+  }
+
+  .window {
+    width: 100%;
+  }
 }

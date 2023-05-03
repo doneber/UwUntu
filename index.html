@@ -6,21 +6,51 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UwUntu</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="terminal.css">
   <script src="main.js" type="module" defer></script>
 </head>
 
 <body>
-  <div class="terminal">
-    <div class="terminal__output"></div>
-    <form class="terminal__input">
-      <span>
-        <span class="user-host-name">doneber@pc</span>:<span class="path">~</span>$&nbsp;
-      </span>
-      <input type="text" autocomplete="off" autofocus>
-    </form>
-    <div class="terminal__blank-space"></div>
-  </div>
+  <main>
+    <section class="desktop">
+      <div class="desktop__content">
+        <div class="copy">
+          <h2>El "Sistema Operativo" <br>
+            creado con tecnologías Web</h2>
+          <p>Explora y disfruta de una simulación de la linea de comandos de Ubuntu.</p>
+        </div>
+        <!-- <img src="logo.svg" height="300" alt=""> -->
+        <div class="window">
+          <header class="window__appbar">
+            <img src="logo.svg" height="20" alt="UwUntu logo">
+            <h3>UwUntu</h3>
+          </header>
+          <div class="terminal">
+            <div class="terminal__output">
+              <p>Welcome to Uwuntu 0.1.0 (Inspired on Ubuntu)<br></p>
+              <p>&emsp; * GitHub Repo: doneber/uwuntu</p>
+              <p>&emsp; * About me: doneber.dev</p>
+              <p>System information as of
+                <script>
+                  let date = new Date();
+                  document.write(String(date).split(' ').splice(0, 5).join(' '))
+                </script>
+              </p>
+            </div>
+            <form class="terminal__input">
+              <span>
+                <span class="user-host-name">doneber@pc</span>:<span class="path">~</span>$&nbsp;
+              </span>
+              <input type="text" autocomplete="off" autofocus>
+            </form>
+            <div class="terminal__blank-space"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </body>
 
 </html>
