@@ -16,6 +16,44 @@ $('.terminal__blank-space').addEventListener('click', () => {
   inputElement.focus()
 })
 
+let currentWindowTop = null
+let currentWindowLeft = null
+
 $('.btn-window-size').addEventListener('click', () => {
+  windowElement.style.position = 'absolute'
   windowElement.classList.toggle('window--maximized')
+  if (windowElement.classList.contains('window--maximized')) {
+    currentWindowLeft = windowElement.offsetLeft
+    currentWindowTop = windowElement.offsetTop
+    windowElement.style.top = 0
+    windowElement.style.left = 0
+  }
+  else {
+    windowElement.style.top = currentWindowTop + 'px'
+    windowElement.style.left = currentWindowLeft + 'px'
+  }
 })
+
+windowElement.addEventListener('dragstart', dragStart)
+// windowElement.addEventListener('dragover', dragOver);
+windowElement.addEventListener('dragend', dragEnd);
+// windowElement.addEventListener('drop', drop);
+
+let xDistance = null;
+let yDistance = null;
+
+function dragStart(e) {
+  windowElement.style.position = 'absolute'
+  xDistance = e.clientX;
+  yDistance = e.clientY;
+}
+
+function dragEnd(e) {
+  windowElement.style.position = 'absolute'
+  // calculate the distance between the current mouse position and the last one
+  const xDiff = e.clientX - xDistance
+  const yDiff = e.clientY - yDistance
+  // update the top and left properties of the element
+  windowElement.style.top = windowElement.offsetTop + yDiff + 'px'
+  windowElement.style.left = windowElement.offsetLeft + xDiff + 'px'
+} 
