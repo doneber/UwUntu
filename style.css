@@ -21,8 +21,8 @@ body {
 }
 
 main {
-  height: 100vh;
   width: min(100% - 2rem, 1500px);
+  height: 100vh;
   margin: 0 auto;
 }
 
@@ -52,6 +52,7 @@ main {
   overflow: hidden;
   width: 50%;
   height: 450px;
+  transition: all 20ms ease;
   background-color: #343536;
   border: 1px solid #777c81;
   border-radius: 8px;
@@ -59,15 +60,59 @@ main {
 
 .window__appbar {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: .6rem;
-  height: 2rem;
-  margin: .3rem .5rem;
+  height: 2.5rem;
 }
 
 .window__appbar h3 {
   font-weight: 500;
   color: rgb(255, 255, 255);
+}
+
+.appbar-title {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .3rem .5rem;
+}
+
+.appbar-options {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.btn-window-size {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  background-image: url(maximizeIcon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.4rem;
+  border: none;
+}
+
+.btn-window-size:hover {
+  background-color: rgba(255, 255, 255, .15);
+}
+
+.window--maximized .btn-window-size {
+  background-image: url(minimizeIcon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.4rem;
+}
+
+.window--maximized {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #343536;
+  border-radius: 0;
 }
 
 .copy {
@@ -121,7 +166,6 @@ main {
 
   .desktop__content {
     flex-direction: column;
-
   }
 
   .window {
