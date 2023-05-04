@@ -35,9 +35,7 @@ $('.btn-window-size').addEventListener('click', () => {
 })
 
 windowElement.addEventListener('dragstart', dragStart)
-// windowElement.addEventListener('dragover', dragOver);
 windowElement.addEventListener('dragend', dragEnd);
-// windowElement.addEventListener('drop', drop);
 
 let xDistance = null;
 let yDistance = null;
@@ -56,4 +54,24 @@ function dragEnd(e) {
   // update the top and left properties of the element
   windowElement.style.top = windowElement.offsetTop + yDiff + 'px'
   windowElement.style.left = windowElement.offsetLeft + xDiff + 'px'
-} 
+}
+
+// supports for draggability on mobile devices
+windowElement.addEventListener('touchstart', touchStart)
+windowElement.addEventListener('touchend', touchEnd)
+
+function touchStart(e) {
+  windowElement.style.position = 'absolute'
+  xDistance = e.touches[0].clientX;
+  yDistance = e.touches[0].clientY;
+}
+
+function touchEnd(e) {
+  windowElement.style.position = 'absolute'
+  // calculate the distance between the current mouse position and the last one
+  const xDiff = e.changedTouches[0].clientX - xDistance
+  const yDiff = e.changedTouches[0].clientY - yDistance
+  // update the top and left properties of the element
+  windowElement.style.top = windowElement.offsetTop + yDiff + 'px'
+  windowElement.style.left = windowElement.offsetLeft + xDiff + 'px'
+}
