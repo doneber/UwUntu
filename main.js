@@ -75,3 +75,22 @@ function touchEnd(e) {
   windowElement.style.top = windowElement.offsetTop + yDiff + 'px'
   windowElement.style.left = windowElement.offsetLeft + xDiff + 'px'
 }
+
+// time
+
+const timeElement = $('.time')
+const dateElement = $('.date')
+
+const updateTime = () => {
+  const now = new Date()
+  // the time only display the hour and minute
+  const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+  const date = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
+  timeElement.textContent = time
+  dateElement.textContent = date
+}
+
+updateTime()
+setInterval(updateTime, 1000)
+
+
