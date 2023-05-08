@@ -34,6 +34,14 @@ $('.btn-window-size').addEventListener('click', () => {
   }
 })
 
+$('.btn-window-close').addEventListener('click', () => {
+  windowElement.style.display = 'none'
+})
+
+$('.appbar__icon').addEventListener('click', () => {
+  windowElement.style.display = 'flex'
+})
+
 windowElement.addEventListener('dragstart', dragStart)
 windowElement.addEventListener('dragend', dragEnd);
 

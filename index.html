@@ -20,13 +20,13 @@
     </p>
   </header>
   <main>
+    <div class="appbar">
+      <div class="appbar__icon">
+        <img src="terminalIcon.svg" alt="Terminal icon">
+      </div>
+    </div>
     <section class="desktop">
       <div class="desktop__content">
-        <div class="copy">
-          <h2>El "Sistema Operativo" <br>
-            creado con tecnologías Web</h2>
-          <p>Explora y disfruta de una simulación de la linea de comandos de Ubuntu.</p>
-        </div>
         <div class="window" draggable="true">
           <header class="window__appbar">
             <div class="appbar-title">
@@ -34,6 +34,8 @@
               <h3>UwUntu</h3>
             </div>
             <div class="appbar-options">
+              <button class="btn-window-close">
+              </button>
               <button class="btn-window-size">
               </button>
             </div>
@@ -54,7 +56,7 @@
               <span>
                 <span class="user-host-name">doneber@pc</span>:<span class="path">~</span>$&nbsp;
               </span>
-              <input type="text" autocomplete="off" autofocus>
+              <input type="text" autocomplete="off" autocapitalize="off" autofocus>
             </form>
             <div class="terminal__blank-space"></div>
           </div>
