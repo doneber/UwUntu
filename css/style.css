@@ -17,7 +17,7 @@
 body {
   overflow: hidden;
   height: 100vh;
-  background-image: url(background.svg);
+  background-image: url(../img/background.svg);
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: cover;
@@ -129,7 +129,7 @@ main {
   width: 2.5rem;
   height: 2.5rem;
   background-color: transparent;
-  background-image: url(minimizeIcon.svg);
+  background-image: url(../img/minimizeIcon.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 1.4rem;
@@ -144,7 +144,7 @@ main {
   width: 2.5rem;
   height: 2.5rem;
   background-color: transparent;
-  background-image: url(maximizeIcon.svg);
+  background-image: url(../img/maximizeIcon.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 1.4rem;
@@ -156,7 +156,7 @@ main {
 }
 
 .window--maximized .btn-window-size {
-  background-image: url(resizeIcon.svg);
+  background-image: url(../img/resizeIcon.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 1.4rem;
@@ -170,29 +170,4 @@ main {
   height: 100%;
   border: 1px solid #343536;
   border-radius: 0;
-}
-
-@media screen and (max-width: 768px) {
-  main {
-    flex-direction: column-reverse;
-    width: 100%;
-    height: calc(100% - var(--taskbar-height));
-  }
-
-  .appbar {
-    width: 100%;
-    height: 4rem;
-  }
-
-  .desktop {
-    padding: 3rem 1rem;
-  }
-
-  .desktop__content {
-    flex-direction: column;
-  }
-
-  .window {
-    width: 100%;
-  }
 }

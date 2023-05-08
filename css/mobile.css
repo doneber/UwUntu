@@ -1,0 +1,25 @@
+
+@media screen and (max-width: 768px) {
+  main {
+    flex-direction: column-reverse;
+    width: 100%;
+    height: calc(100% - var(--taskbar-height));
+  }
+
+  .appbar {
+    width: 100%;
+    height: 4rem;
+  }
+
+  .desktop {
+    padding: 3rem 1rem;
+  }
+
+  .desktop__content {
+    flex-direction: column;
+  }
+
+  .window {
+    width: 100%;
+  }
+}
