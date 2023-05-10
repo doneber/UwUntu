@@ -6,12 +6,19 @@
 }
 
 :root {
-  --bg-color: #0b0d0c;
+  --terminal-bg-color: #1b1c1f;
+  --menubar-bg-color: white;
+  --menubar-text-color: #333;
+  --window-appbar-bg-color: #242529;
   --text-color: #fff;
   --primary-color: #11c8d6;
   --secondary-color: #fe018f;
-  --taskbar-height: 1.8rem;
-  --appbar-width: 4rem;
+  --menubar-height: 1.8rem;
+  --launcher-width: 4rem;
+}
+
+a {
+  color: rgb(51, 111, 223);
 }
 
 body {
@@ -23,27 +30,36 @@ body {
   background-size: cover;
 }
 
-.taskbar {
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, .05);
+.menubar {
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, .04);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: var(--taskbar-height);
-  background-color: #fff2f9;
+  position: relative;
+  height: var(--menubar-height);
+  color: var(--menubar-text-color);
+}
+.menubar:before {
+  filter: opacity(.7);
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--menubar-bg-color);
 }
 
-.clock {
-  color: #333;
-}
 
-.appbar {
+.launcher {
   box-shadow: 2px 2px 2px rgba(0, 0, 0, .05);
-  width: var(--appbar-width);
+  width: var(--launcher-width);
   padding: .5rem;
   background-color: rgba(255, 255, 255, .1);
 }
 
-.appbar__icon {
+.launcher__icon {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,14 +72,14 @@ body {
   border-radius: 8px;
 }
 
-.appbar__icon:hover {
+.launcher__icon:hover {
   transform: scale(1.1);
 }
 
 main {
   display: flex;
   width: min(100% - 2rem, 1500px);
-  height: calc(100% - var(--taskbar-height));
+  height: calc(100% - var(--menubar-height));
   margin: 0;
 }
 
@@ -90,11 +106,11 @@ main {
   flex-direction: column;
   justify-content: start;
   position: absolute;
+  z-index: 9;
   overflow: hidden;
   width: 55%;
   height: 550px;
   transition: all 20ms ease;
-  background-color: #343536;
   border: 1px solid #777c81;
   border-radius: 8px;
 }
@@ -104,12 +120,12 @@ main {
   justify-content: space-between;
   align-items: center;
   height: 2.5rem;
+  background-color: var(--window-appbar-bg-color);
   cursor: move;
 }
 
 .window__appbar h3 {
   font-weight: 500;
-  color: rgb(255, 255, 255);
 }
 
 .appbar-title {
@@ -125,7 +141,7 @@ main {
   align-items: center;
 }
 
-.btn-window-close {
+.btn-window-minimize {
   width: 2.5rem;
   height: 2.5rem;
   background-color: transparent;
@@ -136,6 +152,20 @@ main {
   border: none;
 }
 
+.btn-window-minimize:hover {
+  background-color: rgba(255, 255, 255, .15);
+}
+
+.btn-window-close {
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+  background-image: url(../img/closeIcon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.4rem;
+  border: none;
+}
 .btn-window-close:hover {
   background-color: rgba(255, 255, 255, .15);
 }
