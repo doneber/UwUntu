@@ -201,3 +201,18 @@ main {
   border: 1px solid #343536;
   border-radius: 0;
 }
+
+.prompt-palpitation {
+  border-left: 1px solid #fff;
+  animation: palpitation 1.2s infinite linear;
+}
+
+@keyframes palpitation {
+  0% {
+    border-left: 1px solid #fff;
+  }
+  
+  50% {
+    border: none;
+  }
+}
