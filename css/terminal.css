@@ -25,6 +25,7 @@
 .terminal__input {
   display: flex;
   align-items: start;
+  opacity: 0; /* Al principio es 0, luego con JS se vuelve 1 */
 }
 
 .terminal__blank-space {

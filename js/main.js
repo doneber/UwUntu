@@ -12,6 +12,30 @@ const windowElement = $('.window')
 const terminal = new Terminal(terminalElement, inputElement, outputElement)
 terminal.loadCommands([...commands])
 
+const initialSystemDate = new Date();
+const initMessageElements = [
+  '<p>Welcome to UwUntu 0.1.0 (Inspired on Ubuntu)<br></p>',
+  '<p>&emsp; * GitHub Repo: <a href="https://github.com/doneber/UwUntu" target="_blank">doneber/uwuntu</a></p>',
+  '<p>&emsp; * About me: <a href="https://doneber.dev" target="_blank">doneber.dev</a></p>',
+  `<p>System information as of ${String(initialSystemDate).split(' ').splice(0, 5).join(' ')}</p>`,
+  '<p><br></p>',
+  "<p>Try to run command 'uwu'</p>",
+]
+
+const initMessagesLoading = async () => {
+  let i = -1
+  const testInterval = setInterval(() => {
+    i++
+    if (!initMessageElements[i]) {
+      clearInterval(testInterval)
+      $('.terminal__input').style.setProperty('opacity', '1')
+    } else
+      $('.terminal__output').innerHTML += initMessageElements[i]
+  }, 160)
+}
+
+initMessagesLoading()
+
 $('.terminal__blank-space').addEventListener('click', () => {
   inputElement.focus()
 })
