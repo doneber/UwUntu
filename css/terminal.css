@@ -1,6 +1,13 @@
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../assets/fonts/JetBrainsMono-Regular.woff2g');
+}
+
 .terminal * {
-  font-size: 1.3rem;
   font-family: monospace, 'Courier New', Courier;
+  color: var(--terminal-text-color);
+  font-size: 1.2rem;
+  font-family: JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
 }
 
 .terminal {
@@ -11,6 +18,7 @@
   height: 100%;
   padding: .5rem;
   background-color: var(--terminal-bg-color);
+  background-image: radial-gradient(900px 1000px at 50% 0%, #272d2d 20%, rgba(19, 30, 49, 0) 100%);
   color: var(--text-color);
 }
 
