@@ -12,7 +12,14 @@ const inputElement = $('.terminal__input input')
 const outputElement = $('.terminal__output')
 const windowElement = $('.window')
 
-const terminal = new Terminal(terminalElement, inputElement, outputElement)
+const terminal = new Terminal({
+  terminalElement,
+  inputElement,
+  outputElement,
+  prompt: `<span class="user-host-name">
+  <span>${USER_NAME}</span>
+  <span>@pc</span>:<span class="path">~</span>$&nbsp;`,
+})
 terminal.loadCommands([...commands])
 
 const initialSystemDate = new Date();

@@ -2,12 +2,22 @@ import { Command } from './Command.js'
 import { CommandManager } from './CommandManager.js'
 
 export class Terminal {
-  constructor(terminalElement, inputElement, outputElement) {
+  constructor({
+    terminalElement,
+    inputElement,
+    outputElement,
+    prompt = `
+    <span class="user-host-name">
+      <span>doneber</span>
+      <span>@pc</span>:
+      <span class="path">~</span>$&nbsp;
+    </span>`
+  }) {
     this.commandManager = new CommandManager()
     this.terminalElement = terminalElement
     this.inputElement = inputElement
     this.outputElement = outputElement
-    this.prompt = `<span class='user-host-name'>doneber@pc</span>:<span class='path'>~</span>$&nbsp`
+    this.prompt = prompt
     this.currentLine = ''
     this.commandHistory = []
     this.historyIndex = 0

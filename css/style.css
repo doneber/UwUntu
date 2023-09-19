@@ -238,6 +238,10 @@ main {
   animation: palpitation 1.2s infinite linear;
 }
 
+.user-host-name {
+  display: flex;
+}
+
 @keyframes palpitation {
   0% {
     border-left: 1px solid var(--terminal-text-color);
