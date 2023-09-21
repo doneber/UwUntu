@@ -4,13 +4,17 @@ import { commands } from './commandList.js'
 const $ = (selector, context = document) =>
   context.querySelector(selector)
 
-const USER_NAME = new URLSearchParams(window.location.search).get('user') || 'doneber'
-document.querySelector('#user').innerText = USER_NAME
-
 const terminalElement = $('.terminal')
 const inputElement = $('.terminal__input input')
 const outputElement = $('.terminal__output')
 const windowElement = $('.window')
+
+// query params options
+const params = new URLSearchParams(window.location.search)
+const USER_NAME = params.get('user') || 'doneber'
+document.querySelector('#user').innerText = USER_NAME
+const FULLSCREEN = params.get('fullscreen') == 'true'
+if (FULLSCREEN) windowElement.classList.toggle('window--maximized')
 
 const terminal = new Terminal({
   terminalElement,
