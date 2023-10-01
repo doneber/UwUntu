@@ -1,18 +1,16 @@
-import { Terminal } from './Terminal.ts'
-import { commands } from './commandList.ts'
-
-const $ = (selector, context = document) =>
-  context.querySelector(selector)
+import { $ } from './utils'
+import { Terminal } from './Terminal'
+import { commands } from './commandList'
 
 const terminalElement = $('.terminal')
-const inputElement = $('.terminal__input input')
+const inputElement = $('.terminal__input input') as HTMLInputElement
 const outputElement = $('.terminal__output')
 const windowElement = $('.window')
 
 // query params options
 const params = new URLSearchParams(window.location.search)
 const USER_NAME = params.get('user') || 'doneber'
-document.querySelector('#user').innerText = USER_NAME
+$('#user').innerText = USER_NAME
 const FULLSCREEN = params.get('fullscreen') == 'true'
 if (FULLSCREEN) windowElement.classList.toggle('window--maximized')
 
@@ -54,16 +52,16 @@ $('.terminal__blank-space').addEventListener('click', () => {
   inputElement.focus()
 })
 
-let currentWindowTop = null
-let currentWindowLeft = null
+let currentWindowTop: number | null = null
+let currentWindowLeft: number | null = null
 
 $('.btn-window-size').addEventListener('click', () => {
   windowElement.classList.toggle('window--maximized')
   if (windowElement.classList.contains('window--maximized')) {
     currentWindowLeft = windowElement.offsetLeft
     currentWindowTop = windowElement.offsetTop
-    windowElement.style.top = 0
-    windowElement.style.left = 0
+    windowElement.style.top = '0'
+    windowElement.style.left = '0'
   }
   else {
     windowElement.style.top = currentWindowTop + 'px'
@@ -89,16 +87,17 @@ $('.launcher__icon').addEventListener('click', () => {
 windowElement.addEventListener('dragstart', dragStart)
 windowElement.addEventListener('dragend', dragEnd);
 
-let xDistance = null;
-let yDistance = null;
+let xDistance: number | null = null;
+let yDistance: number | null = null;
 
-function dragStart(e) {
+function dragStart(e: MouseEvent) {
   windowElement.style.position = 'absolute'
   xDistance = e.clientX;
   yDistance = e.clientY;
 }
 
-function dragEnd(e) {
+function dragEnd(e: MouseEvent) {
+  if (!xDistance || !yDistance) return
   windowElement.style.position = 'absolute'
   // calculate the distance between the current mouse position and the last one
   const xDiff = e.clientX - xDistance

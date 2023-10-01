@@ -1,5 +1,7 @@
-const outputElement = document.querySelector('.terminal__output')
-const promptElement = document.querySelector('.terminal__input')
+import { $ } from "./utils"
+
+const outputElement = $('.terminal__output')
+const promptElement = $('.terminal__input')
 
 export const commands = [
   // command 'clear' that clears the terminal
@@ -126,11 +128,11 @@ export const commands = [
       messages.push('')
       let velocity = 1
       const promptPalpitation = document.createElement('span')
-      promptPalpitation.classList = 'prompt-palpitation'
+      promptPalpitation.className = 'prompt-palpitation'
       promptPalpitation.innerHTML = '&nbsp;'
       // display messages with a delay using promises
-      let oldParant = null
-      let newParant = null
+      let oldParant: HTMLElement|null = null
+      let newParant: HTMLElement|null = null
       messages.reduce((promise, message, index) => {
         let delay = null
         return promise.then(() => {
@@ -141,7 +143,7 @@ export const commands = [
               // create a div element to add the message
               const newLineContainerElement = document.createElement('div')
               newParant = newLineContainerElement
-              newLineContainerElement.classList = 'history-line'
+              newLineContainerElement.classList.add('history-line')
               outputElement.appendChild(newLineContainerElement)
 
               // create a span element to add the message
@@ -150,7 +152,7 @@ export const commands = [
 
               // add the prompt palpitation to the newLineContainerElement
               if (!oldParant) newLineContainerElement.appendChild(promptPalpitation)
-              else newLineContainerElement.appendChild(oldParant.lastChild)
+              else if (oldParant.lastChild instanceof Node) newLineContainerElement.appendChild(oldParant.lastChild)
 
               // add letter by letter of the message to the newLineContainerElement every 100ms
               message.split('').reduce((promise, letter) => {
@@ -175,9 +177,11 @@ export const commands = [
         })
       }, Promise.resolve()).then(
         () => {
-          promptElement.style.display = 'flex'
-          outputElement.removeChild(outputElement.lastChild)
-          document.querySelector('.terminal__input input').focus()
+          if (outputElement.lastChild instanceof Node){
+            promptElement.style.display = 'flex'
+            outputElement.removeChild(outputElement.lastChild)
+            $('.terminal__input input').focus()
+          }
         }
       )
       return ''

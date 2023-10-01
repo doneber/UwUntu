@@ -1,7 +1,16 @@
-import { Command } from './Command.ts'
-import { CommandManager } from './CommandManager.ts'
+import { Command } from './Command'
+import { CommandManager } from './CommandManager'
 
 export class Terminal {
+  private commandManager: CommandManager
+  private terminalElement: HTMLElement
+  private inputElement: HTMLInputElement
+  private outputElement: HTMLElement
+  private currentLine: string
+  private commandHistory: string[]
+  private historyIndex: number
+  private prompt: string
+
   constructor({
     terminalElement,
     inputElement,
@@ -12,6 +21,11 @@ export class Terminal {
       <span>@pc</span>:
       <span class="path">~</span>$&nbsp;
     </span>`
+  }: {
+    terminalElement: HTMLElement,
+    inputElement: HTMLInputElement,
+    outputElement: HTMLElement,
+    prompt?: string
   }) {
     this.commandManager = new CommandManager()
     this.terminalElement = terminalElement
@@ -29,7 +43,7 @@ export class Terminal {
     this.inputElement.addEventListener('input', this.handleInputChange.bind(this))
   }
 
-  handleInputKeyDown(event) {
+  handleInputKeyDown(event: KeyboardEvent) {
     if (event.key === 'Enter') {
       event.preventDefault()
       this.executeCommand(this.currentLine.trim())
@@ -54,8 +68,11 @@ export class Terminal {
     }
   }
 
-  handleInputChange(event) {
-    this.currentLine = event.target.value
+  handleInputChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement
+    if (inputElement) {
+      this.currentLine = inputElement.value
+    }
   }
 
   clearInput() {
@@ -63,7 +80,7 @@ export class Terminal {
     this.currentLine = ''
   }
 
-  levenshteinDistance(a, b) {
+  levenshteinDistance(a: string, b: string) {
     /* Calculates the distance beetween two Strings */
     if (a.length == 0) return b.length;
     if (b.length == 0) return a.length;
@@ -91,7 +108,7 @@ export class Terminal {
     return matrix[b.length][a.length];
   }
 
-  executeCommand(input) {
+  executeCommand(input: string) {
     this.renderCommandExecuted(input)
     this.clearInput()
     if (!input) return
@@ -116,29 +133,36 @@ export class Terminal {
         const output = command.handler(args)
         this.render(output)
       } catch (error) {
-        console.log(error.message)
+        if (error instanceof TypeError)
+          console.log(error.message)
+        else console.log(error)
       }
     }
   }
 
-  loadCommands(commands) {
+  loadCommands(commands: Command[]) {
     commands.forEach((command) => {
-      const newCommandInstance = new Command(command.name, command.handler,
-        command.description || '',
-        command.usage || '',
-        command.options || []);
+      const newCommandInstance = new Command(
+        {
+          name: command.name,
+          handler: command.handler,
+          description: command.description || '',
+          usage: command.usage || '',
+          options: command.options
+        }
+      )
       this.commandManager.registerCommand(newCommandInstance);
     });
 
     // display help command
-    const displayHelp = (command) => {
+    const displayHelp = (command: Command) => {
       const outputLines = [
         `${command.name}: ${command.name} ${command.usage} <br>`,
         `&emsp;&emsp;${command.description} <br>`,
         '',
       ];
 
-      if (command.options.length > 0) {
+      if (command.options && command.options.length > 0) {
         outputLines.push('', '<br>&emsp;&emsp;Options:<br>');
         command.options.forEach(({ option, description }) => {
           outputLines.push(`&emsp;&emsp;&emsp;&emsp;${option}&emsp;${description} <br>`);
@@ -148,7 +172,7 @@ export class Terminal {
       return outputLines.join('');
     }
     // Help Command Handler
-    const helpHandler = (args) => {
+    const helpHandler = (args: string[]) => {
       if (args.length === 1) {
         const targetCmdName = args[0];
         const targetCmd = this.commandManager.getCommand(targetCmdName)
@@ -168,17 +192,24 @@ export class Terminal {
       }
     };
 
-    const helpCommand = new Command('help', helpHandler, 'Display information about available commands');
+    const helpCommand = new Command(
+      {
+        name: 'help',
+        handler: helpHandler,
+        description: 'Display information about available commands'
+      }
+    )
     this.commandManager.registerCommand(helpCommand);
   }
-  async renderCommandExecuted(input) {
+
+  async renderCommandExecuted(input: string) {
     this.outputElement.innerHTML += `${this.prompt}${input}</p>`
     await setTimeout(() => {
       // set the scroll to the bottom
       this.terminalElement.scrollTop = this.terminalElement.scrollHeight
     }, 1)
   }
-  render(text) {
+  render(text: string) {
     this.outputElement.innerHTML += `<p>${text}</p>`
     this.terminalElement.scrollTop = this.terminalElement.scrollHeight
   }

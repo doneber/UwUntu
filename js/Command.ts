@@ -1,5 +1,30 @@
+interface handlerType {
+  (args: string[]): string
+}
+
+interface CommandType {
+  name: string
+  handler: handlerType
+  description: string
+  usage?: string
+  options?: { option: string, description: string }[]
+}
+
 export class Command {
-  constructor(name, handler, description = '', usage = '', options = []) {
+  name: string
+  handler: handlerType
+  description: string
+  usage?: string
+  options?: { option: string, description: string }[]
+
+  constructor(
+    {
+      name,
+      handler,
+      description = '',
+      usage = '',
+      options = []
+    }: CommandType) {
     this.name = name
     this.handler = handler
     this.description = description
