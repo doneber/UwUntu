@@ -1,26 +1,26 @@
 
 @media screen and (max-width: 768px) {
-  main {
+  body main {
     flex-direction: column-reverse;
     width: 100%;
     height: calc(100% - var(--menubar-height));
   }
 
-  .launcher {
+  body .launcher {
     width: 100%;
     height: 4rem;
     flex-direction: row;
   }
 
-  .desktop {
+  body .desktop {
     padding: 3rem 1rem;
   }
 
-  .desktop__content {
+  body .desktop__content {
     flex-direction: column;
   }
 
-  .window {
+  body .window {
     width: 100%;
   }
 }
