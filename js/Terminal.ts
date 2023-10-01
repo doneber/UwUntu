@@ -1,5 +1,5 @@
-import { Command } from './Command.js'
-import { CommandManager } from './CommandManager.js'
+import { Command } from './Command.ts'
+import { CommandManager } from './CommandManager.ts'
 
 export class Terminal {
   constructor({

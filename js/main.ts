@@ -1,5 +1,5 @@
-import { Terminal } from './Terminal.js'
-import { commands } from './commandList.js'
+import { Terminal } from './Terminal.ts'
+import { commands } from './commandList.ts'
 
 const $ = (selector, context = document) =>
   context.querySelector(selector)
