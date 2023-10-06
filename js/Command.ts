@@ -17,7 +17,7 @@ export class Command {
   usage?: string
   options?: { option: string, description: string }[]
 
-  constructor(
+  constructor (
     {
       name,
       handler,

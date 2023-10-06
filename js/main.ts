@@ -11,7 +11,7 @@ const windowElement = $('.window')
 const params = new URLSearchParams(window.location.search)
 const USER_NAME = params.get('user') || 'doneber'
 $('#user').innerText = USER_NAME
-const FULLSCREEN = params.get('fullscreen') == 'true'
+const FULLSCREEN = params.get('fullscreen') === 'true'
 if (FULLSCREEN) windowElement.classList.toggle('window--maximized')
 
 const terminal = new Terminal({
@@ -20,18 +20,18 @@ const terminal = new Terminal({
   outputElement,
   prompt: `<span class="user-host-name">
   <span>${USER_NAME}</span>
-  <span>@pc</span>:<span class="path">~</span>$&nbsp;`,
+  <span>@pc</span>:<span class="path">~</span>$&nbsp;`
 })
 terminal.loadCommands([...commands])
 
-const initialSystemDate = new Date();
+const initialSystemDate = new Date()
 const initMessageElements = [
   '<p>Welcome to UwUntu 0.1.0 (Inspired on Ubuntu)<br></p>',
   '<p>&emsp; * GitHub Repo: <a href="https://github.com/doneber/UwUntu" target="_blank">doneber/uwuntu</a></p>',
   '<p>&emsp; * About me: <a href="https://doneber.dev" target="_blank">doneber.dev</a></p>',
   `<p>System information as of ${String(initialSystemDate).split(' ').splice(0, 5).join(' ')}</p>`,
   '<p><br></p>',
-  "<p>Try to run command 'uwu'</p>",
+  "<p>Try to run command 'uwu'</p>"
 ]
 
 const initMessagesLoading = async () => {
@@ -41,8 +41,7 @@ const initMessagesLoading = async () => {
     if (!initMessageElements[i]) {
       clearInterval(testInterval)
       $('.terminal__input').style.setProperty('opacity', '1')
-    } else
-      $('.terminal__output').innerHTML += initMessageElements[i]
+    } else { $('.terminal__output').innerHTML += initMessageElements[i] }
   }, 160)
 }
 
@@ -62,8 +61,7 @@ $('.btn-window-size').addEventListener('click', () => {
     currentWindowTop = windowElement.offsetTop
     windowElement.style.top = '0'
     windowElement.style.left = '0'
-  }
-  else {
+  } else {
     windowElement.style.top = currentWindowTop + 'px'
     windowElement.style.left = currentWindowLeft + 'px'
   }
@@ -77,26 +75,23 @@ $('.btn-window-close').addEventListener('click', () => {
 })
 
 $('.launcher__icon').addEventListener('click', () => {
-  if (windowElement.style.display === 'flex'
-    || windowElement.style.display === '')
-    windowElement.style.display = 'none'
-  else
-    windowElement.style.display = 'flex'
+  if (windowElement.style.display === 'flex' ||
+    windowElement.style.display === '') { windowElement.style.display = 'none' } else { windowElement.style.display = 'flex' }
 })
 
 windowElement.addEventListener('dragstart', dragStart)
-windowElement.addEventListener('dragend', dragEnd);
+windowElement.addEventListener('dragend', dragEnd)
 
-let xDistance: number | null = null;
-let yDistance: number | null = null;
+let xDistance: number | null = null
+let yDistance: number | null = null
 
-function dragStart(e: MouseEvent) {
+function dragStart (e: MouseEvent) {
   windowElement.style.position = 'absolute'
-  xDistance = e.clientX;
-  yDistance = e.clientY;
+  xDistance = e.clientX
+  yDistance = e.clientY
 }
 
-function dragEnd(e: MouseEvent) {
+function dragEnd (e: MouseEvent) {
   if (!xDistance || !yDistance) return
   windowElement.style.position = 'absolute'
   // calculate the distance between the current mouse position and the last one
@@ -123,5 +118,3 @@ const updateTime = () => {
 
 updateTime()
 setInterval(updateTime, 1000)
-
-

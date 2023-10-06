@@ -11,7 +11,7 @@ export class Terminal {
   private historyIndex: number
   private prompt: string
 
-  constructor({
+  constructor ({
     terminalElement,
     inputElement,
     outputElement,
@@ -38,12 +38,12 @@ export class Terminal {
     this.bindEventListeners()
   }
 
-  bindEventListeners() {
+  bindEventListeners () {
     this.inputElement.addEventListener('keydown', this.handleInputKeyDown.bind(this))
     this.inputElement.addEventListener('input', this.handleInputChange.bind(this))
   }
 
-  handleInputKeyDown(event: KeyboardEvent) {
+  handleInputKeyDown (event: KeyboardEvent) {
     if (event.key === 'Enter') {
       event.preventDefault()
       this.executeCommand(this.currentLine.trim())
@@ -68,47 +68,47 @@ export class Terminal {
     }
   }
 
-  handleInputChange(event: Event) {
+  handleInputChange (event: Event) {
     const inputElement = event.target as HTMLInputElement
     if (inputElement) {
       this.currentLine = inputElement.value
     }
   }
 
-  clearInput() {
+  clearInput () {
     this.inputElement.value = ''
     this.currentLine = ''
   }
 
-  levenshteinDistance(a: string, b: string) {
+  levenshteinDistance (a: string, b: string) {
     /* Calculates the distance beetween two Strings */
-    if (a.length == 0) return b.length;
-    if (b.length == 0) return a.length;
-    let matrix = [];
-    let i;
+    if (a.length === 0) return b.length
+    if (b.length === 0) return a.length
+    const matrix = []
+    let i
     for (i = 0; i <= b.length; i++) {
-      matrix[i] = [i];
+      matrix[i] = [i]
     }
-    let j;
+    let j
     for (j = 0; j <= a.length; j++) {
-      matrix[0][j] = j;
+      matrix[0][j] = j
     }
     for (i = 1; i <= b.length; i++) {
       for (j = 1; j <= a.length; j++) {
-        if (b.charAt(i - 1) == a.charAt(j - 1)) {
-          matrix[i][j] = matrix[i - 1][j - 1];
+        if (b.charAt(i - 1) === a.charAt(j - 1)) {
+          matrix[i][j] = matrix[i - 1][j - 1]
         } else {
           matrix[i][j] = Math.min(
             matrix[i - 1][j - 1] + 1,
             Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1)
-          );
+          )
         }
       }
     }
-    return matrix[b.length][a.length];
+    return matrix[b.length][a.length]
   }
 
-  executeCommand(input: string) {
+  executeCommand (input: string) {
     this.renderCommandExecuted(input)
     this.clearInput()
     if (!input) return
@@ -123,7 +123,7 @@ export class Terminal {
       let message = `${commandName}: command not found`
       // If there is no command, look for a similar coincidence
       this.commandManager.commands.forEach(command => {
-        if (this.levenshteinDistance(commandName, command.name) == 1){
+        if (this.levenshteinDistance(commandName, command.name) === 1) {
           message = `Command '${commandName}' not found, did you mean '${command.name}'?`
         }
       })
@@ -133,14 +133,12 @@ export class Terminal {
         const output = command.handler(args)
         this.render(output)
       } catch (error) {
-        if (error instanceof TypeError)
-          console.log(error.message)
-        else console.log(error)
+        if (error instanceof TypeError) { console.log(error.message) } else console.log(error)
       }
     }
   }
 
-  loadCommands(commands: Command[]) {
+  loadCommands (commands: Command[]) {
     commands.forEach((command) => {
       const newCommandInstance = new Command(
         {
@@ -151,46 +149,43 @@ export class Terminal {
           options: command.options
         }
       )
-      this.commandManager.registerCommand(newCommandInstance);
-    });
+      this.commandManager.registerCommand(newCommandInstance)
+    })
 
     // display help command
     const displayHelp = (command: Command) => {
       const outputLines = [
         `${command.name}: ${command.name} ${command.usage} <br>`,
         `&emsp;&emsp;${command.description} <br>`,
-        '',
-      ];
+        ''
+      ]
 
       if (command.options && command.options.length > 0) {
-        outputLines.push('', '<br>&emsp;&emsp;Options:<br>');
+        outputLines.push('', '<br>&emsp;&emsp;Options:<br>')
         command.options.forEach(({ option, description }) => {
-          outputLines.push(`&emsp;&emsp;&emsp;&emsp;${option}&emsp;${description} <br>`);
-        });
+          outputLines.push(`&emsp;&emsp;&emsp;&emsp;${option}&emsp;${description} <br>`)
+        })
       }
 
-      return outputLines.join('');
+      return outputLines.join('')
     }
     // Help Command Handler
     const helpHandler = (args: string[]) => {
       if (args.length === 1) {
-        const targetCmdName = args[0];
+        const targetCmdName = args[0]
         const targetCmd = this.commandManager.getCommand(targetCmdName)
 
-        if (targetCmd)
-          return displayHelp(targetCmd);
-        else
-          return `${targetCmdName}: command not found`;
+        if (targetCmd) { return displayHelp(targetCmd) } else { return `${targetCmdName}: command not found` }
       } else {
         // display all commands available with their descriptions, arguments and options
-        const outputLines = ['Available commands:<br><br>'];
+        const outputLines = ['Available commands:<br><br>']
         this.commandManager.commands.forEach((command) => {
-          outputLines.push(`&emsp;${command.name}&emsp;&emsp;${command.description}<br>`);
+          outputLines.push(`&emsp;${command.name}&emsp;&emsp;${command.description}<br>`)
         }
-        );
-        return outputLines.join('');
+        )
+        return outputLines.join('')
       }
-    };
+    }
 
     const helpCommand = new Command(
       {
@@ -199,17 +194,18 @@ export class Terminal {
         description: 'Display information about available commands'
       }
     )
-    this.commandManager.registerCommand(helpCommand);
+    this.commandManager.registerCommand(helpCommand)
   }
 
-  async renderCommandExecuted(input: string) {
+  async renderCommandExecuted (input: string) {
     this.outputElement.innerHTML += `${this.prompt}${input}</p>`
     await setTimeout(() => {
       // set the scroll to the bottom
       this.terminalElement.scrollTop = this.terminalElement.scrollHeight
     }, 1)
   }
-  render(text: string) {
+
+  render (text: string) {
     this.outputElement.innerHTML += `<p>${text}</p>`
     this.terminalElement.scrollTop = this.terminalElement.scrollHeight
   }
