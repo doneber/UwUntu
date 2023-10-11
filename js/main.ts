@@ -6,6 +6,12 @@ const terminalElement = $('.terminal')
 const inputElement = $('.terminal__input input') as HTMLInputElement
 const outputElement = $('.terminal__output')
 const windowElement = $('.window')
+const shutdownBtn = $('#shutdownBtn')
+
+shutdownBtn.addEventListener('click', () => {
+  alert('Shutting down...')
+  window.close()
+})
 
 // query params options
 const params = new URLSearchParams(window.location.search)
