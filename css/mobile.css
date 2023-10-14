@@ -23,4 +23,12 @@
   body .window {
     width: 100%;
   }
+
+  /* Si es mobile, solo muestra la hora pero mantiene funcionalidad de mostrar la fecha */
+  .date {
+    display: none;
+  }
+  .clock.only-time .date {
+    display: inline;
+  }
 }

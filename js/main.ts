@@ -6,11 +6,28 @@ const terminalElement = $('.terminal')
 const inputElement = $('.terminal__input input') as HTMLInputElement
 const outputElement = $('.terminal__output')
 const windowElement = $('.window')
-const shutdownBtn = $('#shutdownBtn')
 
+// Control de los botones de la barra superior
+const clockElement = $('.clock')
+clockElement.addEventListener('click', () => {
+  clockElement.classList.toggle('only-time')
+})
+
+const wifiBtn = $('#wifiBtn') as HTMLButtonElement
+wifiBtn.addEventListener('click', () => {
+  wifiBtn.classList.toggle('inactive')
+})
+
+const volumeBtn = $('#volumeBtn') as HTMLButtonElement
+volumeBtn.addEventListener('click', () => {
+  volumeBtn.classList.toggle('btn-no-volume-bg')
+})
+
+const shutdownBtn = $('#shutdownBtn') as HTMLButtonElement
 shutdownBtn.addEventListener('click', () => {
-  alert('Shutting down...')
-  window.close()
+  if (confirm('Are you sure?')) {
+    window.close()
+  }
 })
 
 // query params options
