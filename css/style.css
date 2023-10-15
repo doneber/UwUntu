@@ -151,6 +151,28 @@ main {
   }
 }
 
+main:after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  margin: auto;
+  height: 100vh;
+  width: 100vw;
+  background: linear-gradient(transparent, #2b7b8280, transparent);
+  animation: fondo 15s linear infinite forwards;
+}
+
+@keyframes fondo {
+  0% {
+    transform: translate(0, -100%);
+  }
+  100% {
+    transform: translate(0, 100%);
+  }
+}
+
 .desktop {
   display: flex;
   justify-content: center;
