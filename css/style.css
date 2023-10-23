@@ -108,9 +108,18 @@ body {
   height: 3rem;
   padding: .3rem;
   transition: all 20ms ease;
-  background-color: rgba(0, 0, 0, 0.7);
   cursor: pointer;
   border-radius: 8px;
+}
+
+.launcher__icon:after {
+  position: absolute;
+  left: .4rem;
+  content: '';
+  background-color: #11c8d6;
+  width: .3rem;
+  height: .3rem;
+  border-radius: 50%;
 }
 
 .menu-launcher__icon {
@@ -125,8 +134,8 @@ body {
   border-radius: 8px;
 }
 
-.launcher__icon:hover,
-.menu-launcher__icon:hover {
+.launcher__icon:hover img,
+.menu-launcher__icon:hover img {
   transform: scale(1.05);
 }
 
@@ -160,7 +169,7 @@ main:after {
   margin: auto;
   height: 100vh;
   width: 100vw;
-  background: linear-gradient(transparent, #2b7b8280, transparent);
+  background: linear-gradient(transparent, #2b7b82cc, transparent);
   animation: fondo 15s linear infinite forwards;
 }
 
