@@ -50,6 +50,18 @@ body {
 
 .menubar-left-buttons {
   margin: 0 .5rem;
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.current-app {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  backdrop-filter: blur(5px);
+  color: var(--menubar-text-color);
+  transition: all 20ms ease;
 }
 
 .menubar-right-buttons {

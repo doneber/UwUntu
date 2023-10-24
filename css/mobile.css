@@ -31,4 +31,8 @@
   .clock.only-time .date {
     display: inline;
   }
+
+  .activities {
+    display: none;
+  }
 }
