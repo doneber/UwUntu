@@ -153,13 +153,24 @@ body {
 
 main {
   display: flex;
-  /* width: min(100% - 2rem, 1500px); */
   height: calc(100% - var(--menubar-height));
   margin: 0;
   animation: dotScroll 5s linear infinite;
   background-image: radial-gradient(circle, rgb(68 135 141 / 55%) 2px, transparent 0);
   background-size: calc(14.2857142857% - 1px) 100px;
   background-position: -60px 0;
+}
+
+main:before {
+  content: '';
+  position: absolute;
+  z-index: 9;
+  width: 100%;
+  height: calc(100% - var(--menubar-height));
+  animation: dotScroll2 5s linear infinite;
+  background-image: radial-gradient(circle, rgb(68 135 141 / 65%) 2px, transparent 0);
+  background-size: calc(14.2857142857% - 1px) 100px;
+  background-position: -200px 0;
 }
 
 @keyframes dotScroll {
@@ -169,6 +180,16 @@ main {
 
   to {
     background-position-y: 100px;
+  }
+}
+
+@keyframes dotScroll2 {
+  from {
+    background-position-y: 50px;
+  }
+
+  to {
+    background-position-y: 150px;
   }
 }
 
